@@ -4,35 +4,27 @@
 
 package frc.robot.commands.limelight;
 
-import java.util.Optional;
-
-import edu.wpi.first.apriltag.AprilTag;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.LimelightHelpers;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 
-public class FindDistance extends Command {
-  /** Creates a new FindDistance. */
-  public FindDistance(Limelight myLimelight) {
+public class AlignToTag extends Command {
+  /** Creates a new AlignToTag. */
+  private Limelight mLimelight = new Limelight();
+  public AlignToTag() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(myLimelight);
+    addRequirements(mLimelight);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Limelight.FindDistance();
-    
+    double TX = (Math.abs(Limelight.tx) > 5.5) ? (Math.abs(Limelight.tx)/Limelight.tx * 5.5) : Limelight.tx;
+    RobotContainer.drivetrain.applyRequest(()-> RobotContainer.drive.withVelocityX(TX));
   }
 
   // Called once the command ends or is interrupted.

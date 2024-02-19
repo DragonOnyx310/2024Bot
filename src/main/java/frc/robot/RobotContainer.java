@@ -32,22 +32,24 @@ import frc.robot.commands.Shooter.AimShooter;
 import frc.robot.commands.Shooter.ShooterIntakeTilSight;
 import frc.robot.commands.Shooter.ShooterToggle;
 import frc.robot.commands.Shooter.StoreShooter;
+import frc.robot.commands.limelight.AlignToTag;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class RobotContainer {
-  private double MaxSpeed = 6; // 6 meters per second desired top speed
-  private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
+  private static double MaxSpeed = 6; // 6 meters per second desired top speed
+  private static double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
 
   //private final SendableChooser<Command> autoChooser;
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
-  private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+  public final static CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   public static final GenericHID driver = new GenericHID(0);
 
   public static JoystickButton A = new JoystickButton(driver, 1);
@@ -62,7 +64,7 @@ public class RobotContainer {
   public static POVButton downDpad = new POVButton(driver, 180);
 
 
-  private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+  public static final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
       .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
       .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
                                                                // driving in open loop
@@ -75,7 +77,7 @@ public class RobotContainer {
   public static final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
   public static final ElevatorSubsystem mElevatorSubsystem = new ElevatorSubsystem();
   public static final ClimberSubsystem mClimberSubsystem = new ClimberSubsystem();
-
+  public static final Limelight mLimelight = new Limelight();
 
   public static Trigger trigger(GenericHID controller, int axis){
     return new Trigger(()-> controller.getRawAxis(axis) >= 0.9);
@@ -130,6 +132,9 @@ public class RobotContainer {
 
     //Sets the intake in the store position
     Menu.onTrue(new StoreIntake());
+
+
+    Start.toggleOnTrue(new AlignToTag());
   }
 
 
