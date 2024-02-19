@@ -92,6 +92,7 @@ public class RobotContainer {
             .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
         ));
 
+        
     //joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
     //joystick.b().whileTrue(drivetrain
        // .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
@@ -134,7 +135,7 @@ public class RobotContainer {
     Menu.onTrue(new StoreIntake());
 
 
-    Start.toggleOnTrue(new AlignToTag());
+    Start.toggleOnTrue(drivetrain.applyRequest(()-> drive.withVelocityY(-joystick.getLeftX() * MaxSpeed).withVelocityX(-joystick.getLeftY() * MaxSpeed).withRotationalRate(-Limelight.txSlowly())));
   }
 
 

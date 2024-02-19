@@ -5,6 +5,7 @@
 package frc.robot.commands.limelight;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.CommandSwerveDrivetrain;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 
@@ -23,8 +24,10 @@ public class AlignToTag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double TX = (Math.abs(Limelight.tx) > 5.5) ? (Math.abs(Limelight.tx)/Limelight.tx * 5.5) : Limelight.tx;
-    RobotContainer.drivetrain.applyRequest(()-> RobotContainer.drive.withVelocityX(TX));
+    //double TX = (Math.abs(Limelight.tx) > 5.5) ? (Math.abs(Limelight.tx)/Limelight.tx * 5.5) : Limelight.tx;
+    System.out.println("--------------------Made it to the AlignToTag Command------------------------");
+    double TX = (Limelight.tx > 5.5) ? 5.5 : Limelight.tx;
+    RobotContainer.drivetrain.applyRequest(()-> RobotContainer.drive.withVelocityX(2));
   }
 
   // Called once the command ends or is interrupted.

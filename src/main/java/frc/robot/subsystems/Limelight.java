@@ -20,6 +20,7 @@ public class Limelight extends SubsystemBase {
 
   /** Creates a new Limelight. */
   public Limelight() {
+    System.out.println("----------------------------Limelight Subsystem------------------------------");
     Optional<Alliance> alliance = DriverStation.getAlliance();
     if (alliance.isPresent()) {
       if (alliance.get() == Alliance.Red) {
@@ -46,6 +47,10 @@ public class Limelight extends SubsystemBase {
       return distanceFromTarget;
   }
 
+  public static double txSlowly(){
+    double TX = tx * 0.1;
+    return TX;
+  }
 
   @Override
   public void periodic() {
